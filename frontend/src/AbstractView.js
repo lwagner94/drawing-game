@@ -12,13 +12,9 @@ export default class AbstractView {
 
     set visible(new_value) {
         this.view_visible = new_value;
-        if (this.visible) {
-            this.render();
-            this.afterRender();
-        }
-        else {
-            this.div.innerHTML = "";
-        }
+        this.render();
+        this.afterRender();
+    
     }
 
     inject() {
@@ -34,7 +30,13 @@ export default class AbstractView {
     }
 
     render() {
-        this.div.innerHTML = this.html
+        if (this.visible) {
+            this.div.innerHTML = this.html
+        }
+        else {
+            this.div.innerHTML = "";
+        }
+
     }
 
     afterRender() {

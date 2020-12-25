@@ -12,6 +12,8 @@ export default class GameLobbyView extends AbstractView {
         this.input_lobby_code = null;
         this.button_start_game = null;
 
+        this.startGameHandler = () => {console.log("abcd")};
+
         model.registerUserListListener(() => {
             this.render();
         });
@@ -36,11 +38,18 @@ export default class GameLobbyView extends AbstractView {
     }
 
     afterRender() {
+        if (!this.visible)
+            return;
+
         this.input_number_of_players = document.getElementById("input_number_of_players");
-        this.input_rounds = document.getElementById("input_rounds");;
-        this.input_wordlist = document.getElementById("input_wordlist");;
-        this.input_lobby_code = document.getElementById("input_lobby_code");;
-        this.button_start_game = document.getElementById("button_start_game");;
+        this.input_rounds = document.getElementById("input_rounds");
+        this.input_wordlist = document.getElementById("input_wordlist");
+        this.input_lobby_code = document.getElementById("input_lobby_code");
+        this.button_start_game = document.getElementById("button_start_game");
+
+
+        console.log("Here")
+        this.button_start_game.onclick = this.startGameHandler;
         
 
         // this.button_join_game.onclick = function() {

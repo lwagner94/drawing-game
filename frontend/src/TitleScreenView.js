@@ -27,6 +27,9 @@ export default class TitleScreenView extends AbstractView {
     }
 
     afterRender() {
+        if (!this.visible)
+            return;
+
         this.button_join_game = document.getElementById("button_join_game");
         this.button_create_game = document.getElementById("button_create_game");
         this.input_lobby_code = document.getElementById("input_lobby_code");
