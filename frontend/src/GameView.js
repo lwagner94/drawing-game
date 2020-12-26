@@ -12,6 +12,21 @@ export default class GameView extends AbstractView {
         this.currentX = 0;
         this.currentY = 0;
         this.ctx = null;
+        this.canvasChangedHandler = (content) => {};
+
+        model.registerCanvasListener(content => {
+            if (this.canvasDrawing !== null) {
+                var img = new Image();
+                img.onload = () => {
+                    // canvas.width = img.width;
+                    // canvas.height = img.height;
+                    this.canvasDrawing.getContext("2d").drawImage(img, 0, 0);
+                };
+            
+                img.src = content;
+            }
+
+        });
         // this.previousX = 0;
         // this.previousY = 0;
         // this.pressed = false;
@@ -37,6 +52,8 @@ export default class GameView extends AbstractView {
 
         this.canvasDrawing = document.getElementById("canvas_drawing");
         this.ctx = this.canvasDrawing.getContext("2d");
+        this.ctx.fillStyle = "#FFF";
+        this.ctx.fillRect(0, 0, this.canvasDrawing.width, this.canvasDrawing.height);
         this.canvasDrawing.oncontextmenu = (event) => {return false};
 
         this.canvasDrawing.addEventListener('mousemove', (event) => {
@@ -64,6 +81,10 @@ export default class GameView extends AbstractView {
 
             this.ctx.lineTo(this.currentX, this.currentY);
             this.ctx.stroke();
+
+
+            // TODO: Rate limiting??
+            this.canvasChangedHandler(this.canvasDrawing.toDataURL("image/jpeg", 0.5));
         });
         this.canvasDrawing.addEventListener('mousedown', (event) => {
             var rect = this.canvasDrawing.getBoundingClientRect();

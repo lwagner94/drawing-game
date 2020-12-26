@@ -22,6 +22,10 @@ export default class Controller {
             this.gameView.visible = true;
         }
 
+        this.gameView.canvasChangedHandler = (content) => {
+            this.model.setCanvasContent(content);
+        };
+
         // this.titleScreenView.joinGameHandler = () => {
         //     this.titleScreenView.visible = false;
         //     this.gameLobbyView.visible = true;
