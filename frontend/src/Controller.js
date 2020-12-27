@@ -1,9 +1,8 @@
 
 
 export default class Controller {
-    constructor(model, mainView, titleScreenView, gameLobbyView, gameView) {
+    constructor(model, titleScreenView, gameLobbyView, gameView) {
         this.model = model;
-        this.mainView = mainView;
         this.titleScreenView = titleScreenView;
         this.gameLobbyView = gameLobbyView;
         this.gameView = gameView;
@@ -15,12 +14,6 @@ export default class Controller {
     }
 
     registerHandlers() {
-    
-        this.mainView.handler = () => {
-            console.log("Click");
-            // this.titleScreenView.visible = !this.titleScreenView.visible;
-            this.gameView.visible = true;
-        }
 
         this.gameView.canvasChangedHandler = (content) => {
             this.model.setCanvasContent(content);

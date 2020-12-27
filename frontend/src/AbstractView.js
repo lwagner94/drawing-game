@@ -12,35 +12,19 @@ export default class AbstractView {
 
     set visible(new_value) {
         this.view_visible = new_value;
-        this.render();
-        this.afterRender();
-    
-    }
+        const element = document.getElementById(this.div_id)
 
-    inject() {
-        return `<div id=${this.div_id}></div>`
-    }
-    
-    get div() {
-        return document.getElementById(this.div_id);
-    }
-
-    get html() {
-        return ""
-    }
-
-    render() {
-        if (this.visible) {
-            this.div.innerHTML = this.html
+        if (element) {
+            if (new_value) {
+                element.style.display = 'block';
+            }
+            else {
+                element.style.display = 'none';
+            }
         }
         else {
-            this.div.innerHTML = "";
+            console.log(`Could not find div with id ${this.div_id}!`);
         }
 
     }
-
-    afterRender() {
-    }
-
-
 }

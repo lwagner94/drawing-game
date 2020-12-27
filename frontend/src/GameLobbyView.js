@@ -17,29 +17,6 @@ export default class GameLobbyView extends AbstractView {
         model.registerUserListListener(() => {
             this.render();
         });
-    }
-
-    get html() {
-        var content = `
-        
-        Number of Players <input id=input_number_of_players></input>
-        Rounds <input id=input_rounds></input>
-        Word list <input id=input_wordlist></input>
-        Lobby code<input type="text" id=input_lobby_code></input>
-        <button id=button_start_game>Start game</button>
-        Players: 
-        `
-        for (const player of this.model.getUserList()) {
-            content += player + ", "
-        }
-
-        return content;
-
-    }
-
-    afterRender() {
-        if (!this.visible)
-            return;
 
         this.input_number_of_players = document.getElementById("input_number_of_players");
         this.input_rounds = document.getElementById("input_rounds");
@@ -50,16 +27,5 @@ export default class GameLobbyView extends AbstractView {
 
         console.log("Here")
         this.button_start_game.onclick = this.startGameHandler;
-        
-
-        // this.button_join_game.onclick = function() {
-        //     console.log("Join Game");
-        // }
-
-        // this.button_create_game.onclick = function() {
-        //     console.log("Create Game");
-        // }
     }
-
-
 }

@@ -16,14 +16,7 @@ export default class TitleScreenView extends AbstractView {
     }
 
     get html() {
-        return `
-        
-        Name <input id=input_name></input>
-        <button id=button_create_game>Create game </button>
-        Lobby code<input type="text" id=input_lobby_code></input>
-        <button id=button_join_game>Join game</button>
-        `
-
+        return ""
     }
 
     afterRender() {
