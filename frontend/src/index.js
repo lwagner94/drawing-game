@@ -1,8 +1,9 @@
-import Controller from './Controller'
+import Controller from './Controller.js'
 import GameLobbyView from './GameLobbyView.js';
-import GameView from './GameView'
+import GameView from './GameView.js'
 import TitleScreenView from './TitleScreenView.js';
 import Model from './Model.js';
+// import css from "./style.css"
 
 function init() {
   const model = new Model();

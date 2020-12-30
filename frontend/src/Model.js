@@ -1,5 +1,5 @@
 
-import {WSMessage, WSMessageType} from "../../common/WSMessage.mjs"
+import {WSMessage, WSMessageType} from "./WSMessage.mjs"
 
 export default class Model {
 

@@ -2,14 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <title>Webpack tutorial</title>
 </head>
 <body>
-    <div id=content></div>
     <div id=div_titlescreenview>
-        Name <input id=input_name></input>
-        <button id=button_create_game>Create game </button>
-        Lobby code<input type="text" id=input_lobby_code></input>
+        <div class="field">
+            <label class="label">
+                Name
+            </label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Your nickname" id="input_name">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">
+                Lobby code
+            </label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Your nickname" id="input_lobby_code">
+            </div>
+        </div>
+
+        <button class="button is-primary" id=button_create_game>Create game </button>
         <button id=button_join_game>Join game</button>
     </div>
     <div id=div_gamelobbyview>
@@ -24,7 +41,7 @@
     </div>
 
     
-
+<script type="module" src="index.js"></script></body>
 
 </body>
 </html>

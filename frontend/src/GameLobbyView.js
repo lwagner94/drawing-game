@@ -1,6 +1,6 @@
 'use strict'
 
-import AbstractView from "./AbstractView";
+import AbstractView from "./AbstractView.js";
 
 export default class GameLobbyView extends AbstractView {
     constructor(model) {
