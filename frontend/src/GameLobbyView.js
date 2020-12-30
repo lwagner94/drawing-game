@@ -12,7 +12,7 @@ export default class GameLobbyView extends AbstractView {
         this.input_lobby_code = null;
         this.button_start_game = null;
 
-        this.startGameHandler = () => {console.log("abcd")};
+        this.startGameHandler = () => {};
 
         model.registerUserListListener(() => {
             this.render();
@@ -25,7 +25,8 @@ export default class GameLobbyView extends AbstractView {
         this.button_start_game = document.getElementById("button_start_game");
 
 
-        console.log("Here")
-        this.button_start_game.onclick = this.startGameHandler;
+        this.button_start_game.onclick = () => {
+            this.startGameHandler();
+        };
     }
 }
