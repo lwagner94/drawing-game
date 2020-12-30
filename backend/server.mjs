@@ -17,6 +17,7 @@ app.get('/api/test', (req, res) => {
 })
 
 app.use(express.static('../frontend/src'));
+app.use(express.static('../common'));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
