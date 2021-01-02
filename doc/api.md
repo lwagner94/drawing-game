@@ -3,18 +3,26 @@
   - POST /api/game Create a new game
     - Parameters, as a JSON string:
       {
-        wordlist: {"title" : ["word1", "word2"]},
+        wordlist: 
+          {"title" : "Fruit"
+           "words": ["word1", "word2"]
+          },
         numberOfPlayers: 4,
         rounds: 3,
       }
     - Return 201 Created, payload: 
       {
-        gameId: "<gameId>"
+        gameId: "<gameId>",
+        wordlist: 
+          {"title" : "Fruit"
+           "words": ["word1", "word2"]
+          },
+        numberOfPlayers: 4,
+        rounds: 3,
+        users: []
       }
-    - Return 400 Bad Request for invalid requests, payload: 
-      {
-        message: "error message"
-      }
+    - Return 400 Bad Request for invalid requests
+
   - GET /api/game/<gameId> Fetch info about game
     - Return 200 Ok, payload
       {
@@ -39,7 +47,7 @@
   - POST /api/game/<gameId>/join Join a game
     - Parameters, as a JSON string:
       {
-        "username": "sepp",
+        "userName": "sepp",
       }
     - Return 201 Created, payload: 
       {
@@ -64,7 +72,7 @@
 
   - GET /api/wordlists Get available global word lists
     - Return 200 Ok, payload:
-      {"Foods": ["apple", "pancake"], "Animals": ["tiger", "dog"]}
+      {["title": "Foods", words: ["apple", "pancake"]]}
 
 /api/socket
   - Structure: 
