@@ -1,3 +1,5 @@
+import {createGame, getGame, getWordlists, joinGame} from "./ServerAPI.js"
+
 
 export default class Model {
 
@@ -17,24 +19,32 @@ export default class Model {
 
         // fun();
 
-        this.websocket = new WebSocket("ws://" + window.location.host + "/api/socket");
+        // console.log(getWordlists());
 
-        this.websocket.onopen = () => {
-            console.log("Open");
-        }
+        joinGame("game", "lukas").then(result => {
+            console.log(result);
+        });
 
-        this.websocket.onerror = (error) => {
-            console.log("error: " + JSON.stringify(error));
-        }
 
-        this.websocket.onmessage = (event) => {
-            // const message = WSMessage.fromJSONString(event.data);
-            // // console.log(message);
 
-            // if (message.type === WSMessageType.CANVAS_CONTENT) {
-            //     this.notifyCanvasListener(message.payload);
-            // }
-        }
+        // this.websocket = new WebSocket("ws://" + window.location.host + "/api/socket");
+
+        // this.websocket.onopen = () => {
+        //     console.log("Open");
+        // }
+
+        // this.websocket.onerror = (error) => {
+        //     console.log("error: " + JSON.stringify(error));
+        // }
+
+        // this.websocket.onmessage = (event) => {
+        //     // const message = WSMessage.fromJSONString(event.data);
+        //     // // console.log(message);
+
+        //     // if (message.type === WSMessageType.CANVAS_CONTENT) {
+        //     //     this.notifyCanvasListener(message.payload);
+        //     // }
+        // }
 
     }
 

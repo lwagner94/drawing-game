@@ -1,8 +1,10 @@
 
 
 export default class Controller {
-    constructor(model, titleScreenView, gameLobbyView, gameView) {
+    constructor(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView) {
         this.model = model;
+        this.manageWordlistsView = manageWordlistsView;
+        this.createGameView = createGameView;
         this.titleScreenView = titleScreenView;
         this.gameLobbyView = gameLobbyView;
         this.gameView = gameView;
@@ -11,6 +13,8 @@ export default class Controller {
         this.gameView.visible = false;
         this.gameLobbyView.visible = false;
         this.titleScreenView.visible = true;
+        this.manageWordlistsView.visible = false;
+        this.createGameView.visible = false;
 
         this.registerHandlers();
 
@@ -28,18 +32,42 @@ export default class Controller {
             this.titleScreenView.visible = false;
             this.gameLobbyView.visible = true;
             this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
         };
 
-        this.titleScreenView.createGameHandler = () => {
+        this.titleScreenView.switchToCreateGameViewHandler = () => {
             this.titleScreenView.visible = false;
-            this.gameLobbyView.visible = true;
+            this.gameLobbyView.visible = false;
             this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = true;
         };
 
-        this.gameLobbyView.startGameHandler = () => {
+        this.titleScreenView.manageWordlistsHandler = () => {
+            this.titleScreenView.visible = false;
+            this.gameLobbyView.visible = false;
+            this.gameView.visible = false;
+            this.manageWordlistsView.visible = true;
+            this.createGameView.visible = false;
+        }
+
+        this.gameLobbyView.readyHandler = () => {
+            // TODO
+
             this.titleScreenView.visible = false;
             this.gameLobbyView.visible = false;
             this.gameView.visible = true;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
+        }
+
+        this.createGameView.createGameHandler = () => {
+            this.titleScreenView.visible = false;
+            this.gameLobbyView.visible = true;
+            this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
         }
     }
 

@@ -87,7 +87,7 @@ app.post("/api/game", (req, res) => {
         !body.wordlist.hasOwnProperty("words") ||
         typeof(body.numberOfPlayers) !== "number" || 
         typeof(body.rounds) !== "number") {
-        
+
         res.sendStatus(400);
         return;
     }
@@ -123,6 +123,8 @@ app.get("/api/game/:gameId", (req, res) => {
 });
 
 app.delete("/api/game/:gameId", (req, res) => {
+    // TODO: Socket cleanup?
+
     var found = false;
 
     games = games.filter(game => {

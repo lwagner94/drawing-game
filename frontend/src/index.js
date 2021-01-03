@@ -3,6 +3,8 @@ import GameLobbyView from './GameLobbyView.js';
 import GameView from './GameView.js'
 import TitleScreenView from './TitleScreenView.js';
 import Model from './Model.js';
+import CreateGameView from './CreateGameView.js';
+import ManageWordlistsView from './ManageWordlistsView.js';
 // import css from "./style.css"
 
 function init() {
@@ -10,7 +12,9 @@ function init() {
   const gameLobbyView = new GameLobbyView(model);
   const titleScreenView = new TitleScreenView(model);
   const gameView = new GameView(model)
-  const controller = new Controller(model, titleScreenView, gameLobbyView, gameView);
+  const createGameView = new CreateGameView(model);
+  const manageWordlistsView = new ManageWordlistsView(model);
+  const controller = new Controller(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView);
 }
   
 init();

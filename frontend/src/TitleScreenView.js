@@ -6,24 +6,26 @@ export default class TitleScreenView extends AbstractView {
     constructor(model) {
         super("div_titlescreenview");
         this.model = model;
-        this.input_name = null;
-        this.button_create_game = null;
-        this.input_lobby_code = null;
-        this.button_join_game = null;
+        
         this.joinGameHandler = () => {};
-        this.createGameHandler = () => {};
+        this.switchToCreateGameViewHandler = () => {};
+        this.manageWordlistsHandler = () => {};
 
         this.button_join_game = document.getElementById("button_join_game");
-        this.button_create_game = document.getElementById("button_create_game");
+        this.button_switch_to_create_game_view = document.getElementById("button_switch_to_create_game_view");
         this.input_lobby_code = document.getElementById("input_lobby_code");
         this.input_name = document.getElementById("input_name");
+        this.button_manage_wordlists = document.getElementById("button_manage_wordlists");
 
         this.button_join_game.onclick = () => {
             this.joinGameHandler();
         };
-        this.button_create_game.onclick = () => {
-            this.createGameHandler();
+        this.button_switch_to_create_game_view.onclick = () => {
+            this.switchToCreateGameViewHandler();
         };
 
+        this.button_manage_wordlists.onclick = () => {
+            this.manageWordlistsHandler();
+        }
     }
 }

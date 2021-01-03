@@ -26,15 +26,24 @@
             </div>
         </div>
 
-        <button class="button is-primary" id=button_create_game>Create game </button>
-        <button id=button_join_game>Join game</button>
+        <button class="button is-primary" id=button_switch_to_create_game_view>Create game </button>
+        <button class="button is-primary" id=button_join_game>Join game</button>
+        <button class="button is-primary" id=button_manage_wordlists>Manage wordlists</button>
     </div>
-    <div id=div_gamelobbyview>
+    <div id="div_managewordlistsview">
+
+    </div>
+    <div id=div_creategameview>
         Number of Players <input id=input_number_of_players></input>
         Rounds <input id=input_rounds></input>
         Word list <input id=input_wordlist></input>
-        Lobby code<input type="text" id=input_lobby_code></input>
-        <button id=button_start_game>Start game</button>
+        <button id=button_create_game>Create game</button>
+    </div>
+    <div id=div_gamelobbyview>
+        <!-- Number of Players <input id=input_number_of_players></input>
+        Rounds <input id=input_rounds></input>
+        Word list <input id=input_wordlist></input> -->
+        <button id=button_ready>Ready</button>
     </div>
     <div id=div_gameview>
         <canvas id=canvas_drawing width=400 height=400 style="border:1px solid #000000;"></canvas>
