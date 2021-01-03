@@ -13,7 +13,6 @@ expressWs(app)
 const port = 3000
 
 app.use(express.static('../frontend/src'));
-app.use(express.static('../common'));
 
 // Automatically parse json body
 app.use(express.json());

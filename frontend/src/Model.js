@@ -1,6 +1,4 @@
 
-import {WSMessage, WSMessageType} from "./WSMessage.mjs"
-
 export default class Model {
 
     constructor() {
@@ -30,12 +28,12 @@ export default class Model {
         }
 
         this.websocket.onmessage = (event) => {
-            const message = WSMessage.fromJSONString(event.data);
-            // console.log(message);
+            // const message = WSMessage.fromJSONString(event.data);
+            // // console.log(message);
 
-            if (message.type === WSMessageType.CANVAS_CONTENT) {
-                this.notifyCanvasListener(message.payload);
-            }
+            // if (message.type === WSMessageType.CANVAS_CONTENT) {
+            //     this.notifyCanvasListener(message.payload);
+            // }
         }
 
     }
