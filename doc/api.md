@@ -89,8 +89,7 @@
       - payload: {"userId": "<userId>", "message": "<message>"}
     - READY_STATE
       - payload: {"userId": "<userId>", "ready": "true/false"}
-    - BYE
-      - payload: {"userId": "<userId>"}
+
   - Server to clients
     - CANVAS_CONTENT
       - payload: {"userId": "<userId>, "image": "<image as base64 data URL>"}
@@ -106,12 +105,21 @@
             "ready": <bool>,
             "score": <num>,
             "drawing": <bool>   // who is currently drawing?
+            "guessed": <bool> // user has already guessed the word
           }, ...
         ]
       }
-    - WORD_UPDATE
+    - ROUND_UPDATE
+      payload: {
+        "started": bool,
+        "finished": bool,
+        "currentRound": number,
+        "numberOfRounds": number
+      }
+    - GAME_UPDATE
       - payload: 
         {
-          "word": <str>,
-          "wordHint": <str>
+          "currentWord": <str>, // Curent word as a string
+          "wordHintIndices": [<num>, ], // Indices of the characters that should currently be shown
+          "timeLeft": <num> // time left in seconds
         }
