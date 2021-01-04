@@ -24,4 +24,12 @@ export default class CreateGameView extends AbstractView {
             this.createGameHandler();
         };
     }
+
+    get numberOfRounds() {
+        return this.input_rounds.value;
+    }
+
+    get numberOfPlayers() {
+        return this.input_number_of_players.value;
+    }
 }

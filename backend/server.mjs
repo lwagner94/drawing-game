@@ -20,7 +20,7 @@ app.use(express.json());
 // Request logging
 app.use(morgan("tiny"));
 
-const TIME_PER_ROUND = 60;
+const TIME_PER_ROUND = 20;
 
 
 let games = [];
@@ -57,7 +57,7 @@ games.push({
         {
             "userName": "Fritz",
             "userId": "user2",
-            "ready": false,
+            "ready": true,
             "score": 0,
             "drawing": false,
             "guessed": false,
@@ -77,6 +77,15 @@ app.get("/api/wordlists", (req, res) => {
     res.json(getWordlists());
 });
 
+function generateGameId(length) {
+    let id           = '';
+    const alphabet       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for ( var i = 0; i < length; i++ ) {
+        id += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+    return id;
+ }
+
 
 app.post("/api/game", (req, res) => {
     const body = req.body;
@@ -94,7 +103,7 @@ app.post("/api/game", (req, res) => {
 
     const game = new Object();
 
-    game.gameId = uuidv4();
+    game.gameId = generateGameId(4);
     game.wordlist = body.wordlist;
     game.numberOfPlayers = body.numberOfPlayers;
     game.rounds = body.rounds;
@@ -301,10 +310,10 @@ function gameUpdate(game) {
                 game.finished = true;
             }
 
-            sendRoundUpdate(game);
+            
         }
 
-        
+        sendRoundUpdate(game);
 
         // Randomly choose next word
         game.currentWordIndex = randomIntegerInRange(0, game.wordlist.words.length - 1);
@@ -381,18 +390,18 @@ app.ws('/api/socket', function (ws, req) {
 
             }
 
-            sendToOtherUsers(game, user, JSON.stringify(msg));
+            sendToAllUsers(game, JSON.stringify(msg));
         }
         else if (msg.type === "READY_STATE") {
             const [game, user] = findGameAndUserByUserId(msg.payload.userId);
             user.ready = msg.payload.ready;
 
-            sendCurrentUserList(game);
-
             const everybodyReady = game.users.every(u => u.ready);
             if (everybodyReady) {
                 startGame(game);
             }            
+
+            sendCurrentUserList(game);
         }
         else {
             console.log("Invalid message!");

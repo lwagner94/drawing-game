@@ -1,84 +1,178 @@
-import {createGame, getGame, getWordlists, joinGame} from "./ServerAPI.js"
+import {createGame, getGame, getWordlists, joinGame, ServerAPISocket} from "./ServerAPI.js"
 
 
 export default class Model {
 
     constructor() {
-        this.userListListeners = [];
-        this.userList = ["Hans", "Fritz"];
+        this.onUserlistChangedListeners = [];
+        this.onUserlistChanged = () => {
+            for (const listener of this.onUserlistChangedListeners) {
+                listener();
+            }
+        };
 
-        this.canvasListener = (content) => {};
+        this.onCanvasChanged = () => {};
+        
+        this.onChatUpdate = () => {};
+        this.onRoundUpdate = () => {};
+        this.onGameUpdate = () => {};
 
-        // var fun = () => {
-        //     console.log("Timeout");
-        //     this.userList.push("Lukas");
-        //     this.notifyUserListListeners();
-        //     setTimeout(fun, 3000);
-        // }
+        this.onGameCreated = () => {};
+        this.onGameJoined = () => {};
+        this.onGameStarted = () => {};
+        this.onGameFinished = () => {};
 
+        this.userlist = [];
+        this.chatMessages = [];
+        this._canvasImage = "";
 
+        this.gameStarted = false;
+        this.gameFinished = false;
+        this.currentRound = -1;
+        this.numberOfRounds = -1;
+
+        this.currentWord = "";
+        this.currentWordHint = "";
+        this.timeLeft = 0;
+
+        this.userId = ""
+        this.gameId = ""
+        this._ready = false;
+
+        this.socket = null;
         // fun();
 
         // console.log(getWordlists());
 
-        joinGame("game", "lukas").then(result => {
-            console.log(result);
-        });
+        // joinGame("game", "lukas").then(result => {
+        //     console.log(result);
+        // });
 
+ 
+        // this.socket.sendReadyState(true)
 
-
-        // this.websocket = new WebSocket("ws://" + window.location.host + "/api/socket");
-
-        // this.websocket.onopen = () => {
-        //     console.log("Open");
-        // }
-
-        // this.websocket.onerror = (error) => {
-        //     console.log("error: " + JSON.stringify(error));
-        // }
-
-        // this.websocket.onmessage = (event) => {
-        //     // const message = WSMessage.fromJSONString(event.data);
-        //     // // console.log(message);
-
-        //     // if (message.type === WSMessageType.CANVAS_CONTENT) {
-        //     //     this.notifyCanvasListener(message.payload);
-        //     // }
-        // }
 
     }
 
-    registerUserListListener(listener) {
-        this.userListListeners.push(listener);
-    }
+    connectSocket() {
+        this.socket = new ServerAPISocket(this.userId);
 
-    notifyUserListListeners() {
-        for (const handler of this.userListListeners) {
-            handler();
+        this.socket.onUserlistUpdate = users => {
+            this.userlist = users;
+            this.onUserlistChanged();
+        };
+
+        this.socket.onRoundUpdate = (started, finished, currentRound, numberOfRounds) => {
+            let oldStarted = this.gameStarted;
+            let oldFinished = this.gameFinished;
+            this.gameStarted = started;
+            this.gameFinished = finished;
+            this.currentRound = currentRound;
+            this.numberOfRounds = numberOfRounds;
+
+            if (!oldStarted && this.gameStarted) {
+                this.onGameStarted();
+            }
+
+            if (!oldFinished && this.gameFinished) {
+                this.onGameFinished();
+            }
+
+            this.onRoundUpdate();
+        };
+
+        this.socket.onGameUpdate = (currentWord, wordHintIndices, timeLeft) => {
+            this.currentWord = currentWord;
+            this.currentWordHint = "";
+
+            for (var i = 0; i < currentWord.length; i++) {
+                if (wordHintIndices.includes(i)) {
+                    this.currentWordHint += currentWord[i];
+                }
+                else {
+                    this.currentWordHint += "_";
+                }
+            }
+            
+            this.timeLeft = timeLeft;
+
+            this.onGameUpdate();
+        };
+
+        this.socket.onCanvasContent = (image) => {
+            this._canvasImage = image;
+            this.onCanvasChanged();
+        };
+
+        this.socket.onChatMessage = (userId, message) => {
+            for (const user of this.userlist) {
+                if (userId === user.userId) {
+                    this.chatMessages.push({
+                        userName: user.userName,
+                        message: message
+                    });
+                }
+            }
+
+            this.onChatUpdate();
         }
+
+        this.socket.sendHello();
     }
 
-    registerCanvasListener(listener) {
-        this.canvasListener = listener;
+    createGame(userName, numberOfPlayers, numberOfRounds, wordlist) {
+        createGame(numberOfPlayers, numberOfRounds, wordlist)
+        .then(result => {
+            this.gameId = result.gameId;
+            this.onGameCreated();
+            return joinGame(result.gameId, userName)
+
+        })
+        .then(result => {
+            this.userId = result.userId;
+            this.connectSocket();
+            this.onGameJoined();
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
-    notifyCanvasListener(content) {
-        this.canvasListener(content);
+    joinGame(userName, gameId) {
+        joinGame(gameId, userName)
+        .then(result => {
+            this.userId = result.userId;
+            this.connectSocket();
+            this.onGameJoined();
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
-    getUserList() {
-        return this.userList;
+    guessWord(guess) {
+        this.socket.sendChatMessage(guess);
     }
 
-    setCanvasContent(content) {
-        const message = new WSMessage(WSMessageType.CANVAS_CONTENT, content)
-
-        this.websocket.send(JSON.stringify(message));
+    set ready(ready) {
+        this.socket.sendReadyState(ready);
+        this._ready = ready;
     }
 
+    get ready() {
+        return this._ready;
+    }
 
+    get canvasImage() {
+        return this._canvasImage;
+    }
 
+    set canvasImage(image) {
+        this.socket.sendCanvasContent(image);
+    }
 
-
-
+    get drawing() {
+        const me = this.userlist.find(user => user.userId === this.userId);
+        return me.drawing;
+    }
 }

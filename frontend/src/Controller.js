@@ -24,16 +24,19 @@ export default class Controller {
 
     registerHandlers() {
 
-        this.gameView.canvasChangedHandler = (content) => {
-            this.model.setCanvasContent(content);
+        this.gameView.onCanvasChanged = (content) => {
+            this.model.canvasImage = content;
         };
 
+        this.gameView.onWordGuessed = (guess) => {
+            this.model.guessWord(guess);
+        }
+
         this.titleScreenView.joinGameHandler = () => {
-            this.titleScreenView.visible = false;
-            this.gameLobbyView.visible = true;
-            this.gameView.visible = false;
-            this.manageWordlistsView.visible = false;
-            this.createGameView.visible = false;
+            // TODO Input validation
+            console.log(this.titleScreenView.userName);
+            console.log(this.titleScreenView.lobbyCode);
+            this.model.joinGame(this.titleScreenView.userName, this.titleScreenView.lobbyCode);
         };
 
         this.titleScreenView.switchToCreateGameViewHandler = () => {
@@ -53,8 +56,27 @@ export default class Controller {
         }
 
         this.gameLobbyView.readyHandler = () => {
-            // TODO
+            this.model.ready = !this.model.ready;
+        }
 
+        this.createGameView.createGameHandler = () => {
+            // TODO Validation
+            const players = parseInt(this.createGameView.numberOfPlayers);
+            const rounds = parseInt(this.createGameView.numberOfRounds);
+
+            this.model.createGame(this.titleScreenView.userName, 
+                players, rounds, {"title": "Foo", "words": ["foo1", "foo2"]});
+        }
+
+        this.model.onGameJoined = () => {
+            this.titleScreenView.visible = false;
+            this.gameLobbyView.visible = true;
+            this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
+        }
+
+        this.model.onGameStarted = () => {
             this.titleScreenView.visible = false;
             this.gameLobbyView.visible = false;
             this.gameView.visible = true;
@@ -62,12 +84,13 @@ export default class Controller {
             this.createGameView.visible = false;
         }
 
-        this.createGameView.createGameHandler = () => {
-            this.titleScreenView.visible = false;
-            this.gameLobbyView.visible = true;
-            this.gameView.visible = false;
-            this.manageWordlistsView.visible = false;
-            this.createGameView.visible = false;
+        this.model.onGameFinished = () => {
+            // TODO
+        }
+
+        this.model.onGameCreated = () => {
+            const id = this.model.gameId;
+            this.gameLobbyView.lobbyCode = id;
         }
     }
 

@@ -28,4 +28,12 @@ export default class TitleScreenView extends AbstractView {
             this.manageWordlistsHandler();
         }
     }
+
+    get userName() {
+        return this.input_name.value;
+    }
+
+    get lobbyCode() {
+        return this.input_lobby_code.value;
+    }
 }

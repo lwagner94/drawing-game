@@ -96,9 +96,7 @@
     - CHAT_MESSAGE
       - payload: {"userId": "<userId>", "message": "<message>"}
     - USERLIST_UPDATE
-      - payload: 
-      {
-        "users": [
+      - payload:  [
           {
             "userId": <str>,
             "userName": <str>,
@@ -108,7 +106,6 @@
             "guessed": <bool> // user has already guessed the word
           }, ...
         ]
-      }
     - ROUND_UPDATE
       payload: {
         "started": bool,
