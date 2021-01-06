@@ -12,6 +12,7 @@ export default class GameView extends AbstractView {
         this.currentX = 0;
         this.currentY = 0;
         this.ctx = null;
+        this.color = "#000000";
         this.onCanvasChanged = (content) => {};
         this.onWordGuessed = (guess) => {};
 
@@ -22,12 +23,74 @@ export default class GameView extends AbstractView {
         this.guessInput = document.getElementById("input_guess");
         this.guessButton = document.getElementById("button_guess");
         this.chatDiv = document.getElementById("div_chat");
+
+        ////////////////
+        this.yellowButton = document.getElementById("button_yellow");
+        this.orangeButton = document.getElementById("button_orange");
+        this.redButton = document.getElementById("button_red");
+        this.magentaButton = document.getElementById("button_magenta");
+        this.blueButton = document.getElementById("button_blue");
+        this.turquoiseButton = document.getElementById("button_turquoise");
+        this.greenButton = document.getElementById("button_green");
+        this.darkgreenButton = document.getElementById("button_darkgreen");
+        this.brownButton = document.getElementById("button_brown");
+        this.blackButton = document.getElementById("button_black");
+
+        this.clearButton = document.getElementById("button_clear");
+        ///////////////
+
         this.drawingEnabled = false;
 
         this.setupHandlers();
     }
 
     setupHandlers() {
+        this.yellowButton.onclick = () => {
+            this.color = "#ffff00";
+        }
+
+        this.orangeButton.onclick = () => {
+            this.color = "#ff9900";
+        }
+
+        this.redButton.onclick = () => {
+            this.color = "#ff0000";
+        }
+
+        this.magentaButton.onclick = () => {
+            this.color = "#8b008b";
+        }
+
+        this.blueButton.onclick = () => {
+            this.color = "#0000ff";
+        }
+
+        this.turquoiseButton.onclick = () => {
+            this.color = "#00ffff";
+        }
+
+        this.greenButton.onclick = () => {
+            this.color = "#00C800";
+        }
+
+        this.darkgreenButton.onclick = () => {
+            this.color = "#007015";
+        }
+
+        this.brownButton.onclick = () => {
+            this.color = "#6b3a0c";
+        }
+
+        this.blackButton.onclick = () => {
+            this.color = "#000000";
+        }
+
+        this.clearButton.onclick = () => {
+            this.ctx.fillStyle = "#FFFFFF";
+            this.ctx.fillRect(0, 0, this.canvasDrawing.width, this.canvasDrawing.height);
+        }
+        //////////////////////
+
         this.guessButton.onclick = () => {
             this.onWordGuessed(this.guessInput.value);
             this.guessInput.value = "";
@@ -115,7 +178,7 @@ export default class GameView extends AbstractView {
             this.ctx.lineWidth = 5;
             this.ctx.lineCap = "round";
             if (event.buttons === 1) {
-                this.ctx.strokeStyle = "#c0392b";
+                this.ctx.strokeStyle = this.color;
             }
             else if (event.buttons === 2) {
                 this.ctx.strokeStyle = "white"
