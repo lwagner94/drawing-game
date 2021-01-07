@@ -197,7 +197,7 @@
     color: black;
     border: 4px dashed #009578;
     border-radius: 10px;
-    display: inline-block;
+    float: left;
 }
 
 .drop_zone__over {
@@ -208,6 +208,6 @@
     display: none;
 }
 
-#Wordlists {
-    display: inline-block;
+#wordlists_section {
+    float: left;
 }
