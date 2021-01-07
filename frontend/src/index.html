@@ -32,7 +32,17 @@
         <button class="button is-primary" id=button_manage_wordlists>Manage wordlists</button>
     </div>
     <div id="div_managewordlistsview">
-
+        <div class="drop_zone">
+            <span class="drop_zone__prompt">Drop a word list here or click to upload.</span>
+            <input type="file" name="newWordlist" class="drop_zone__input">
+        </div>
+        <div id="wordlists_section">
+            <p>Currently available word lists:</p>
+            <ul id="wordlists_currently">
+                <li>Placeholder</li>
+                <li>Second Placeholder</li>
+            </ul>
+        </div>
     </div>
     <div id=div_creategameview>
         Number of Players <input type="number" id=input_number_of_players min="2" max="10", value="2"></input>

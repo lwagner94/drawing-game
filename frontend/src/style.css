@@ -182,3 +182,32 @@
     top: calc(var(--slider-top) - 36px);
     left: calc(var(--slider-left) + 35px);
 }
+
+.drop_zone {
+    max-width: 200px;
+    height: 200px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+    border: 4px dashed #009578;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.drop_zone__over {
+    border-style: solid;
+}
+
+.drop_zone__input {
+    display: none;
+}
+
+#Wordlists {
+    display: inline-block;
+}
