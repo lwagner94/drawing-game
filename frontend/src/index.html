@@ -34,21 +34,19 @@
     <div id="div_managewordlistsview">
         <div class="drop_zone">
             <span class="drop_zone__prompt">Drop a word list here or click to upload.</span>
+            <!-- TODO: only accept text files? -->
             <input type="file" name="newWordlist" class="drop_zone__input" multiple>
         </div>
         <div id="wordlists_section">
             <p>Currently available word lists:</p>
             <ul id="wordlists_currently">
-                <!-- TODO: remove placeholders: -->
-                <li>Default_list_1</li>
-                <li>Default_list_2</li>
             </ul>
         </div>
     </div>
     <div id=div_creategameview>
         Number of Players <input type="number" id=input_number_of_players min="2" max="10", value="2"></input>
         Rounds <input type="number" id=input_rounds min="1" max="10", value="3"></input>
-        Word list <input id=input_wordlist></input>
+        Word list <select name="input_wordlist" id=input_wordlist></select>
         <button id=button_create_game>Create game</button>
     </div>
     <div id=div_gamelobbyview>

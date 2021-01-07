@@ -30,11 +30,23 @@ export default class ManageWordlistsView extends AbstractView {
                 e.preventDefault();
 
                 if (e.dataTransfer.files.length) {
+                    // TODO: only accept text files?
                     inputElement.files = e.dataTransfer.files;
                     updateWordlists(this.wordlists, e.dataTransfer.files);
                 }
 
                 dropZoneElement.classList.remove("drop_zone__over");
+            });
+
+            dropZoneElement.addEventListener("click", e => {
+                inputElement.click();
+            });
+
+            inputElement.addEventListener("change", e => {
+                if(inputElement.files.length) {
+                    // TODO only accept text files?
+                    updateWordlists(this.wordlists, inputElement.files);
+                }
             });
         });
 
@@ -95,10 +107,16 @@ function loadSessionStorageWordlists(wordlistsElement) {
             
             let wordlist_name = storage.key(i);
             addWordlist(wordlistsElement, wordlist_name);
+            addWordlistSelection(wordlist_name);
         }
     }
 }
 
 function addWordlist(wordlistsElement, wordlist_name) {
     wordlistsElement.innerHTML += ('<li>' + wordlist_name + '<\li>');
+}
+
+function addWordlistSelection(wordlist_name) {
+    let selectionElement = document.getElementById("input_wordlist");
+    selectionElement.innerHTML += ('<option value="' + wordlist_name + '">' + wordlist_name + '</option>');
 }

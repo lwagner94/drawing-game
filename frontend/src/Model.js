@@ -42,7 +42,14 @@ export default class Model {
         this.socket = null;
         // fun();
 
-        // console.log(getWordlists());
+        getWordlists().then(result => {
+            for(let i = 0; i < result.length; i++) {
+                let wordlist = result[i];
+                window.sessionStorage.setItem(wordlist.title, JSON.stringify(wordlist));
+            }
+        }); /*.then(() => {
+            loadSessionStorageWordlists();
+        });*/
 
         // joinGame("game", "lukas").then(result => {
         //     console.log(result);
@@ -176,3 +183,28 @@ export default class Model {
         return me.drawing;
     }
 }
+
+/*
+function loadSessionStorageWordlists() {
+    const storage = window.sessionStorage;
+
+    if (storage.length) {
+        for (let i = 0; i < storage.length; i++) {
+            
+            let wordlist_name = storage.key(i);
+            addWordlist(wordlist_name);
+            addWordlistSelection(wordlist_name);
+        }
+    }
+}
+
+function addWordlist(wordlist_name) {
+    let wordlistsElement = document.getElementById("wordlists_currently");
+    wordlistsElement.innerHTML += ('<li>' + wordlist_name + '<\li>');
+}
+
+function addWordlistSelection(wordlist_name) {
+    let selectionElement = document.getElementById("input_wordlist");
+    selectionElement.innerHTML += ('<option value="' + wordlist_name + '">' + wordlist_name + '</option>');
+}
+*/
