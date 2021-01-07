@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Drawing game</title>
 </head>
 <body>
@@ -53,23 +54,30 @@
         <span id="span_word_hint"></span>
         <span id="span_time_left"></span>
         <span id="span_round"></span>
-        <canvas id=canvas_drawing width=400 height=400 style="border:1px solid #000000;"></canvas>
+        <canvas id=canvas_drawing width=500 height=500 style="border:1px solid #000000;"></canvas>
         <div id="div_chat"></div>
         <input class="input" type="text" placeholder="Your guess" id="input_guess">
         <button class="button is-primary" id=button_guess>Guess </button>
 
-        <button id=button_yellow style="background-color:yellow; height: 20px; width: 20px" > </button>
-        <button id=button_orange style="background-color:orange; height: 20px; width: 20px" > </button>
-        <button id=button_red style="background-color:red; height: 20px; width: 20px" > </button>
-        <button id=button_magenta style="background-color:darkmagenta; height: 20px; width: 20px" > </button>
-        <button id=button_blue style="background-color:blue; height: 20px; width: 20px" > </button>
-        <button id=button_turquoise style="background-color:turquoise; height: 20px; width: 20px" > </button>
-        <button id=button_green style="background-color:rgb(0, 200, 0); height: 20px; width: 20px" > </button>
-        <button id=button_darkgreen style="background-color:rgb(00, 112, 21); height: 20px; width: 20px" > </button>
-        <button id=button_brown style="background-color:rgb(107, 58, 12); height: 20px; width: 20px" > </button>
-        <button id=button_black style="background-color:black; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_yellow style="background-color:yellow; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_orange style="background-color:orange; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_red style="background-color:red; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_magenta style="background-color:darkmagenta; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_blue style="background-color:blue; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_turquoise style="background-color:turquoise; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_green style="background-color:rgb(0, 200, 0); height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_darkgreen style="background-color:rgb(00, 112, 21); height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_brown style="background-color:rgb(107, 58, 12); height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_black style="background-color:black; height: 20px; width: 20px" > </button>
+        <button class="round_button" id=button_ereaser style="height: 30px; width: 60px" > Ereaser </button>
+        <button class="round_button" id=button_clear style="height: 30px; width: 60px" > Clear </button>
 
-        <button id=button_clear style="height: 30px; width: 60px" > Clear </button>
+
+        <input  id=pencilsize_slider type="range" min="3" max="23" value="5" class="slider" >
+        <canvas id="pencilsize" height=30 width=30></canvas>
+
+
+        
 
     </div>
 

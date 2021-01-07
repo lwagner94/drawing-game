@@ -15,6 +15,8 @@ export default class GameView extends AbstractView {
         this.color = "#000000";
         this.onCanvasChanged = (content) => {};
         this.onWordGuessed = (guess) => {};
+        this.templatePencilChanged = (content) => {};
+        
 
         this.userlist_game = document.getElementById("userlist_game");
         this.wordHintSpan = document.getElementById("span_word_hint");
@@ -36,59 +38,105 @@ export default class GameView extends AbstractView {
         this.brownButton = document.getElementById("button_brown");
         this.blackButton = document.getElementById("button_black");
 
+        this.pencilSlider = document.getElementById("pencilsize_slider");
+
+        this.ereaserButton = document.getElementById("button_ereaser");
         this.clearButton = document.getElementById("button_clear");
+
+        this.pencilSizeCanvas = document.getElementById("pencilsize");
+
+        this.penctx = document.getElementById("pencilsize").getContext('2d');
+
+
+
         ///////////////
 
         this.drawingEnabled = false;
 
         this.setupHandlers();
+        this.templatePencilChanged();
     }
 
     setupHandlers() {
         this.yellowButton.onclick = () => {
             this.color = "#ffff00";
+            this.templatePencilChanged();
         }
 
         this.orangeButton.onclick = () => {
             this.color = "#ff9900";
+            this.templatePencilChanged();
         }
 
         this.redButton.onclick = () => {
             this.color = "#ff0000";
+            this.templatePencilChanged();
         }
 
         this.magentaButton.onclick = () => {
             this.color = "#8b008b";
+            this.templatePencilChanged();
         }
 
         this.blueButton.onclick = () => {
             this.color = "#0000ff";
+            this.templatePencilChanged();
         }
 
         this.turquoiseButton.onclick = () => {
             this.color = "#00ffff";
+            this.templatePencilChanged();
         }
 
         this.greenButton.onclick = () => {
             this.color = "#00C800";
+            this.templatePencilChanged();
         }
 
         this.darkgreenButton.onclick = () => {
             this.color = "#007015";
+            this.templatePencilChanged();
         }
 
         this.brownButton.onclick = () => {
             this.color = "#6b3a0c";
+            this.templatePencilChanged();
         }
 
         this.blackButton.onclick = () => {
             this.color = "#000000";
+            this.templatePencilChanged();
         }
 
         this.clearButton.onclick = () => {
             this.ctx.fillStyle = "#FFFFFF";
             this.ctx.fillRect(0, 0, this.canvasDrawing.width, this.canvasDrawing.height);
         }
+
+        this.ereaserButton.onclick = () => {
+            this.color = "#ffffff";
+            this.templatePencilChanged();
+        }
+
+        this.templatePencilChanged = () => {
+            this.penctx.fillStyle = "#FFFFFF";
+            this.penctx.fillRect(0, 0, this.pencilSizeCanvas.width, this.pencilSizeCanvas.height);
+
+            this.penctx.beginPath();
+            this.penctx.arc(this.pencilSizeCanvas.height/2, this.pencilSizeCanvas.width/2, (this.pencilSlider.value/2)+1, 0, 2 * Math.PI, false);
+            this.penctx.fillStyle = "#000000";
+            this.penctx.fill();
+
+            this.penctx.beginPath();
+            this.penctx.arc(this.pencilSizeCanvas.height/2, this.pencilSizeCanvas.width/2, this.pencilSlider.value/2, 0, 2 * Math.PI, false);
+            this.penctx.fillStyle = this.color;
+            this.penctx.fill();
+        };
+
+        this.pencilSlider.addEventListener('change', (event) => {
+            this.templatePencilChanged();
+
+        });
         //////////////////////
 
         this.guessButton.onclick = () => {
@@ -175,7 +223,7 @@ export default class GameView extends AbstractView {
             }
     
             this.ctx.beginPath();
-            this.ctx.lineWidth = 5;
+            this.ctx.lineWidth = this.pencilSlider.value;
             this.ctx.lineCap = "round";
             if (event.buttons === 1) {
                 this.ctx.strokeStyle = this.color;
