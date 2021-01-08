@@ -22,6 +22,9 @@ export default class Model {
         this.onGameStarted = () => {};
         this.onGameFinished = () => {};
 
+        this.addWordlistList = (wordlist_name) => {};
+        this.addWordlistSelection = (wordlist_name) => {};
+
         this.userlist = [];
         this.chatMessages = [];
         this._canvasImage = "";
@@ -47,9 +50,9 @@ export default class Model {
                 let wordlist = result[i];
                 window.sessionStorage.setItem(wordlist.title, JSON.stringify(wordlist));
             }
-        }); /*.then(() => {
-            loadSessionStorageWordlists();
-        });*/
+        }).then(() => {
+            this.loadSessionStorageWordlists();
+        });
 
         // joinGame("game", "lukas").then(result => {
         //     console.log(result);
@@ -182,29 +185,72 @@ export default class Model {
         const me = this.userlist.find(user => user.userId === this.userId);
         return me.drawing;
     }
-}
 
-/*
-function loadSessionStorageWordlists() {
-    const storage = window.sessionStorage;
-
-    if (storage.length) {
-        for (let i = 0; i < storage.length; i++) {
+    uploadWordlists = (files)  => {
+    
+        Array.from(files).forEach(file => {
             
-            let wordlist_name = storage.key(i);
-            addWordlist(wordlist_name);
-            addWordlistSelection(wordlist_name);
+            let file_name = file.name.split(".")[0];
+            console.log("update wordlist elements! " + file_name);
+            
+            this.readFile(file).then((content) => {
+                this.storeWordlist(file_name, content).then((wordlist_name) => {
+                    this.updateWordlists(wordlist_name);
+                });
+            });
+        });
+    }
+
+    readFile(file) {
+        const reader = new FileReader();
+    
+        return new Promise((resolve, reject) => {
+            reader.onload = event => resolve(event.target.result);
+            reader.onerror = event => reject(error);
+            reader.readAsText(file);
+        });
+    }
+
+    storeWordlist(wordlist_name, wordlist_content) {
+    
+        return new Promise((resolve, reject) => {
+            if (typeof(Storage) !== undefined) {
+                let wordlist = {};
+                wordlist.title = wordlist_name;
+                wordlist.words = wordlist_content.split(",");
+                
+                for (let i = 0; i < wordlist.words.length; i++) {
+                    wordlist.words[i] = wordlist.words[i].trim().toLowerCase();
+                }
+        
+        
+                // TODO: sanity checks?
+                let sessionStorage = window.sessionStorage;
+                sessionStorage.setItem(wordlist_name, JSON.stringify(wordlist));
+    
+                resolve(wordlist_name);
+            }
+            else {
+                // TODO: error handling
+                console.log("Webstorage not supported.");
+                reject(error);
+            }
+        });
+    }
+
+    loadSessionStorageWordlists() {
+        const storage = window.sessionStorage;
+    
+        if (storage.length) {
+            for (let i = 0; i < storage.length; i++) {
+                let wordlist_name = storage.key(i);
+                this.updateWordlists(wordlist_name);
+            }
         }
     }
-}
 
-function addWordlist(wordlist_name) {
-    let wordlistsElement = document.getElementById("wordlists_currently");
-    wordlistsElement.innerHTML += ('<li>' + wordlist_name + '<\li>');
+    updateWordlists(wordlist_name) {
+        this.addWordlistList(wordlist_name);
+        this.addWordlistSelection(wordlist_name);
+    }
 }
-
-function addWordlistSelection(wordlist_name) {
-    let selectionElement = document.getElementById("input_wordlist");
-    selectionElement.innerHTML += ('<option value="' + wordlist_name + '">' + wordlist_name + '</option>');
-}
-*/

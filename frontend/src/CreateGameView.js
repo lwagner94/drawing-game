@@ -23,6 +23,15 @@ export default class CreateGameView extends AbstractView {
         this.button_create_game.onclick = () => {
             this.createGameHandler();
         };
+
+        this.setupHandlers();
+    }
+
+
+    setupHandlers() {
+        this.model.addWordlistSelection = (wordlist_name) => {
+            this.input_wordlist.innerHTML += ('<option value="' + wordlist_name + '">' + wordlist_name + '</option>');
+        }
     }
 
     get numberOfRounds() {

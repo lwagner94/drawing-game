@@ -92,7 +92,20 @@ export default class Controller {
             const id = this.model.gameId;
             this.gameLobbyView.lobbyCode = id;
         }
+
+        this.manageWordlistsView.uploadWordlists = (files)  => {
+            this.model.uploadWordlists(files);
+        }
+
+        this.manageWordlistsView.returnHomescreen = () => {
+            this.titleScreenView.visible = true;
+            this.gameLobbyView.visible = false;
+            this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
+        }
     }
 
 
 }
+
