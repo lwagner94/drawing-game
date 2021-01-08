@@ -63,9 +63,11 @@ export default class Controller {
             // TODO Validation
             const players = parseInt(this.createGameView.numberOfPlayers);
             const rounds = parseInt(this.createGameView.numberOfRounds);
+            const wordlist_key = this.createGameView.selectedWordlist;
+            const wordlist = this.model.loadWordlist(wordlist_key);
 
             this.model.createGame(this.titleScreenView.userName, 
-                players, rounds, {"title": "Foo", "words": ["foo1", "foo2"]});
+                players, rounds, wordlist);
         }
 
         this.model.onGameJoined = () => {
@@ -92,20 +94,7 @@ export default class Controller {
             const id = this.model.gameId;
             this.gameLobbyView.lobbyCode = id;
         }
-
-        this.manageWordlistsView.uploadWordlists = (files)  => {
-            this.model.uploadWordlists(files);
-        }
-
-        this.manageWordlistsView.returnHomescreen = () => {
-            this.titleScreenView.visible = true;
-            this.gameLobbyView.visible = false;
-            this.gameView.visible = false;
-            this.manageWordlistsView.visible = false;
-            this.createGameView.visible = false;
-        }
     }
 
 
 }
-

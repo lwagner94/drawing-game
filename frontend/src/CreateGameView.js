@@ -41,4 +41,8 @@ export default class CreateGameView extends AbstractView {
     get numberOfPlayers() {
         return this.input_number_of_players.value;
     }
+
+    get selectedWordlist() {
+        return this.input_wordlist.options[this.input_wordlist.selectedIndex].value;
+    }
 }

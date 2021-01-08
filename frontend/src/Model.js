@@ -43,6 +43,9 @@ export default class Model {
         this._ready = false;
 
         this.socket = null;
+
+        this.storage = window.sessionStorage;
+        
         // fun();
 
         getWordlists().then(result => {
@@ -239,14 +242,17 @@ export default class Model {
     }
 
     loadSessionStorageWordlists() {
-        const storage = window.sessionStorage;
-    
-        if (storage.length) {
-            for (let i = 0; i < storage.length; i++) {
-                let wordlist_name = storage.key(i);
+        if (this.storage.length) {
+            for (let i = 0; i < this.storage.length; i++) {
+                const wordlist_name = this.storage.key(i);
                 this.updateWordlists(wordlist_name);
             }
         }
+    }
+
+    loadWordlist(wordlist_key) {
+        const wordlist_name = JSON.parse(this.storage.getItem(wordlist_key));
+        return wordlist_name;
     }
 
     updateWordlists(wordlist_name) {
