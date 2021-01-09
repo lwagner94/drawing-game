@@ -121,6 +121,11 @@ export default class Model {
         this.socket.onChatMessage = (userId, message) => {
             for (const user of this.userlist) {
                 if (userId === user.userId) {
+                    
+                    if (this.chatMessages.length >= 20) {
+                        this.chatMessages.shift();
+                    }
+
                     this.chatMessages.push({
                         userName: user.userName,
                         message: message

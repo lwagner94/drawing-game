@@ -26,7 +26,6 @@ export default class GameView extends AbstractView {
         this.guessButton = document.getElementById("button_guess");
         this.chatDiv = document.getElementById("div_chat");
 
-        ////////////////
         this.yellowButton = document.getElementById("button_yellow");
         this.orangeButton = document.getElementById("button_orange");
         this.redButton = document.getElementById("button_red");
@@ -47,9 +46,6 @@ export default class GameView extends AbstractView {
 
         this.penctx = document.getElementById("pencilsize").getContext('2d');
 
-
-
-        ///////////////
 
         this.drawingEnabled = false;
 
@@ -137,7 +133,6 @@ export default class GameView extends AbstractView {
             this.templatePencilChanged();
 
         });
-        //////////////////////
 
         this.guessButton.onclick = () => {
             this.onWordGuessed(this.guessInput.value);
@@ -183,7 +178,7 @@ export default class GameView extends AbstractView {
 
         this.model.onChatUpdate = () => {
             let html = "<ul>";
-
+            
             for (const message of this.model.chatMessages) {
                 html += `<li>${message.userName}: ${message.message} </li>`;
             }
