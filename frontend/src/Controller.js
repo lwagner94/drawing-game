@@ -1,13 +1,13 @@
 
-
 export default class Controller {
-    constructor(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView) {
+    constructor(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView, gameFinishedView) {
         this.model = model;
         this.manageWordlistsView = manageWordlistsView;
         this.createGameView = createGameView;
         this.titleScreenView = titleScreenView;
         this.gameLobbyView = gameLobbyView;
         this.gameView = gameView;
+        this.gameFinishedView = gameFinishedView;
 
 
         this.gameView.visible = false;
@@ -15,6 +15,7 @@ export default class Controller {
         this.titleScreenView.visible = true;
         this.manageWordlistsView.visible = false;
         this.createGameView.visible = false;
+        this.gameFinishedView.visible = false;
 
         this.registerHandlers();
 
@@ -59,6 +60,7 @@ export default class Controller {
                 this.gameView.visible = false;
                 this.manageWordlistsView.visible = false;
                 this.createGameView.visible = true;
+                this.gameFinishedView.visible = false;
             }
         };
 
@@ -68,6 +70,7 @@ export default class Controller {
             this.gameView.visible = false;
             this.manageWordlistsView.visible = true;
             this.createGameView.visible = false;
+            this.gameFinishedView.visible = false;
         }
 
         this.gameLobbyView.readyHandler = () => {
@@ -91,6 +94,7 @@ export default class Controller {
             this.gameView.visible = false;
             this.manageWordlistsView.visible = false;
             this.createGameView.visible = false;
+            this.gameFinishedView.visible = false;
         }
 
         this.model.onGameStarted = () => {
@@ -99,18 +103,20 @@ export default class Controller {
             this.gameView.visible = true;
             this.manageWordlistsView.visible = false;
             this.createGameView.visible = false;
+            this.gameFinishedView.visible = false;
         }
 
         this.model.onGameFinished = () => {
-            // TODO
-            console.log("Finished");
-            this.model.reset();
+            this.model.updateGameFinished();
 
-            this.titleScreenView.visible = true;
+            this.titleScreenView.visible = false;
             this.gameLobbyView.visible = false;
             this.gameView.visible = false;
             this.manageWordlistsView.visible = false;
             this.createGameView.visible = false;
+            this.gameFinishedView.visible = true;
+
+            this.model.reset();
         }
 
         this.model.onGameCreated = () => {
@@ -128,6 +134,9 @@ export default class Controller {
             this.gameView.visible = false;
             this.manageWordlistsView.visible = false;
             this.createGameView.visible = false;
+            this.gameFinishedView.visible = false;
         }
+
+        this.gameFinishedView.returnHomescreen = this.manageWordlistsView.returnHomescreen;
     }
 }

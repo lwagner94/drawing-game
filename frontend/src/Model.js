@@ -22,6 +22,8 @@ export default class Model {
         this.onGameStarted = () => {};
         this.onGameFinished = () => {};
 
+        this.updateGameFinished = () => {};
+
         this.addWordlistList = (wordlist_name) => {};
         this.addWordlistSelection = (wordlist_name) => {};
 
@@ -69,7 +71,6 @@ export default class Model {
 
         this.socket.onUserlistUpdate = users => {
             this.userlist = users;
-            console.log(this.userlist);
             this.onUserlistChanged();
         };
 

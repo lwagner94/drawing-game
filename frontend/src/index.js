@@ -5,6 +5,7 @@ import TitleScreenView from './TitleScreenView.js';
 import Model from './Model.js';
 import CreateGameView from './CreateGameView.js';
 import ManageWordlistsView from './ManageWordlistsView.js';
+import GameFinishedView from './GameFinishedView.js';
 // import css from "./style.css"
 
 function init() {
@@ -14,7 +15,8 @@ function init() {
   const gameView = new GameView(model)
   const createGameView = new CreateGameView(model);
   const manageWordlistsView = new ManageWordlistsView(model);
-  const controller = new Controller(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView);
+  const gameFinishedView = new GameFinishedView(model);
+  const controller = new Controller(model, titleScreenView, manageWordlistsView, createGameView, gameLobbyView, gameView, gameFinishedView);
 }
   
 init();
