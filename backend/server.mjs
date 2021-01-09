@@ -326,7 +326,7 @@ app.ws('/api/socket', function (ws, req) {
             user.ready = msg.payload.ready;
 
             const everybodyReady = game.users.every(u => u.ready);
-            if (everybodyReady) {
+            if (everybodyReady && game.users.length > 1) {
                 startGame(game);
             }            
 
