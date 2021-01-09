@@ -72,6 +72,7 @@ export default class Model {
 
         this.socket.onUserlistUpdate = users => {
             this.userlist = users;
+            console.log(this.userlist);
             this.onUserlistChanged();
         };
 
@@ -194,7 +195,6 @@ export default class Model {
         Array.from(files).forEach(file => {
             
             let file_name = file.name.split(".")[0];
-            console.log("update wordlist elements! " + file_name);
             
             this.readFile(file).then((content) => {
                 this.storeWordlist(file_name, content).then((wordlist_name) => {

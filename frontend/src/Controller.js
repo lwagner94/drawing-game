@@ -33,18 +33,33 @@ export default class Controller {
         }
 
         this.titleScreenView.joinGameHandler = () => {
-            // TODO Input validation
-            console.log(this.titleScreenView.userName);
-            console.log(this.titleScreenView.lobbyCode);
-            this.model.joinGame(this.titleScreenView.userName, this.titleScreenView.lobbyCode);
+            if(this.titleScreenView.input_name.value == "") {
+                alert("You did not enter a nickname, please provide one.");
+                return;
+            }
+            else {
+                if (this.titleScreenView.lobbyCode == "") {
+                    alert("You did not enter a lobby code, please provide one.");
+                    return;
+                }
+                else {
+                    this.model.joinGame(this.titleScreenView.userName, this.titleScreenView.lobbyCode);
+                }
+            }
         };
 
         this.titleScreenView.switchToCreateGameViewHandler = () => {
-            this.titleScreenView.visible = false;
-            this.gameLobbyView.visible = false;
-            this.gameView.visible = false;
-            this.manageWordlistsView.visible = false;
-            this.createGameView.visible = true;
+            if(this.titleScreenView.input_name.value == "") {
+                alert("You did not enter a nickname, please provide one.");
+                return;
+            }
+            else {
+                this.titleScreenView.visible = false;
+                this.gameLobbyView.visible = false;
+                this.gameView.visible = false;
+                this.manageWordlistsView.visible = false;
+                this.createGameView.visible = true;
+            }
         };
 
         this.titleScreenView.manageWordlistsHandler = () => {

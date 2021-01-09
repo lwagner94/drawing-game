@@ -301,9 +301,9 @@ function gameUpdate(game) {
 
         // Pick next user
         const currentlyDrawingIndex = game.users.findIndex((u) => u.drawing);
-        const newCurrentlyDrawingINdex = (currentlyDrawingIndex + 1) % game.users.length;
+        const newCurrentlyDrawingIndex = (currentlyDrawingIndex + 1) % game.users.length;
 
-        if (newCurrentlyDrawingINdex === 0) {
+        if (newCurrentlyDrawingIndex === 0) {
             game.currentRound++;
 
             if (game.currentRound > game.rounds) {
@@ -320,7 +320,7 @@ function gameUpdate(game) {
         game.wordHintIndices = [];
 
         game.users[currentlyDrawingIndex].drawing = false;
-        game.users[newCurrentlyDrawingINdex].drawing = true;
+        game.users[newCurrentlyDrawingIndex].drawing = true;
 
         game.users.forEach(u => u.guessed = false);
 
