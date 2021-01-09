@@ -25,6 +25,21 @@ export default class Model {
         this.addWordlistList = (wordlist_name) => {};
         this.addWordlistSelection = (wordlist_name) => {};
 
+        this.reset();
+
+        this.storage = window.sessionStorage;
+        
+        getWordlists().then(result => {
+            for(let i = 0; i < result.length; i++) {
+                let wordlist = result[i];
+                window.sessionStorage.setItem(wordlist.title, JSON.stringify(wordlist));
+            }
+        }).then(() => {
+            this.loadSessionStorageWordlists();
+        });
+    }
+
+    reset() {
         this.userlist = [];
         this.chatMessages = [];
         this._canvasImage = "";
@@ -42,29 +57,11 @@ export default class Model {
         this.gameId = ""
         this._ready = false;
 
-        this.socket = null;
-
-        this.storage = window.sessionStorage;
+        if (this.socket) {
+            this.socket.close();
+        }
         
-        // fun();
-
-        getWordlists().then(result => {
-            for(let i = 0; i < result.length; i++) {
-                let wordlist = result[i];
-                window.sessionStorage.setItem(wordlist.title, JSON.stringify(wordlist));
-            }
-        }).then(() => {
-            this.loadSessionStorageWordlists();
-        });
-
-        // joinGame("game", "lukas").then(result => {
-        //     console.log(result);
-        // });
-
- 
-        // this.socket.sendReadyState(true)
-
-
+        this.socket = null;
     }
 
     connectSocket() {

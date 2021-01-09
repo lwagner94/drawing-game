@@ -26,49 +26,6 @@ const TIME_PER_ROUND = 20;
 let games = [];
 let socketMap = new Map();
 
-
-games.push({
-    "gameId": "game",
-    "wordlist": {
-        "title": "Fruits",
-        "words": [
-            "word1",
-            "word2"
-        ]
-    },
-    "numberOfPlayers": 4,
-    "rounds": 3,
-    "currentRound": 0,
-    "started": false,
-    "finished": false,
-    "timeLeft": TIME_PER_ROUND,
-    "currentWordIndex": 0,
-    "wordHintIndices": [],
-    "users": [
-        {
-            "userName": "Hans",
-            "userId": "user1",
-            "ready": false,
-            "score": 0,
-            "drawing": true,
-            "guessed": false,
-            "socketConnected": false
-        },
-        {
-            "userName": "Fritz",
-            "userId": "user2",
-            "ready": true,
-            "score": 0,
-            "drawing": false,
-            "guessed": false,
-            "socketConnected": false
-        }
-    ]
-});
-
-
-
-
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });
@@ -131,30 +88,6 @@ app.get("/api/game/:gameId", (req, res) => {
     res.sendStatus(404);
 });
 
-app.delete("/api/game/:gameId", (req, res) => {
-    // TODO: Socket cleanup?
-
-    var found = false;
-
-    games = games.filter(game => {
-        if (game.gameId !== req.params.gameId) {
-            return true;
-        }
-        else {
-            found = true;
-            return false;
-        }
-        
-    });
-
-    if (found) {
-        res.sendStatus(200);
-    }
-    else {
-        res.sendStatus(404);
-    }
-});
-
 
 app.post("/api/game/:gameId/join", (req, res) => {
     const body = req.body;
@@ -192,12 +125,6 @@ app.post("/api/game/:gameId/join", (req, res) => {
 
     res.status(201).json(user);
 
-});
-
-
-
-app.delete("/api/game/:gameId/join/:userId", (req, res) => {
-    // TODO: Do we really need this?
 });
 
 
@@ -261,11 +188,12 @@ function randomIntegerInRange(min, max) {
 
 setInterval(() => {
     for (const game of games) {
-        if (game.started) {
+        if (game.started && !game.finished) {
             gameUpdate(game);
         }
     }
-    
+
+    games = games.filter(game => !game.finished);    
 }, 1000);
 
 function gameUpdate(game) {
@@ -308,6 +236,7 @@ function gameUpdate(game) {
 
             if (game.currentRound > game.rounds) {
                 game.finished = true;
+                game.currentRound--;
             }
 
             
@@ -418,6 +347,13 @@ app.ws('/api/socket', function (ws, req) {
 
                 user.socketConnected = false;
                 sendCurrentUserList(game);
+
+                const stillConnected = game.users.filter(user => user.socketConnected);
+
+                if (stillConnected.length < 2) {
+                    game.finished = true;
+                    sendRoundUpdate(game);
+                }
                 break;
             }
         }

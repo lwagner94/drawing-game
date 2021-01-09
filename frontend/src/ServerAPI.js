@@ -155,4 +155,10 @@ export class ServerAPISocket {
         };
         this.sendObject(o);
     }
+
+    close() {
+        if (this.connected) {
+            this.socket.close()
+        }
+    }
 }

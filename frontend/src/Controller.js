@@ -103,6 +103,14 @@ export default class Controller {
 
         this.model.onGameFinished = () => {
             // TODO
+            console.log("Finished");
+            this.model.reset();
+
+            this.titleScreenView.visible = true;
+            this.gameLobbyView.visible = false;
+            this.gameView.visible = false;
+            this.manageWordlistsView.visible = false;
+            this.createGameView.visible = false;
         }
 
         this.model.onGameCreated = () => {
