@@ -343,7 +343,13 @@ app.ws('/api/socket', function (ws, req) {
                 console.log(`Removing socket of ${userId} from socketMap`);
                 socketMap.delete(userId);
 
-                const [game, user] = findGameAndUserByUserId(userId);
+                const ret = findGameAndUserByUserId(userId);
+
+                if (!ret) {
+                    return;
+                }
+                
+                const [game, user] = ret;
 
                 user.socketConnected = false;
                 sendCurrentUserList(game);

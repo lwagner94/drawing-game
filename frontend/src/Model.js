@@ -64,6 +64,8 @@ export default class Model {
         }
         
         this.socket = null;
+
+        this.onChatUpdate();
     }
 
     connectSocket() {
