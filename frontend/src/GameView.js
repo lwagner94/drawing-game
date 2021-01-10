@@ -46,6 +46,10 @@ export default class GameView extends AbstractView {
 
         this.penctx = document.getElementById("pencilsize").getContext('2d');
 
+        this.wordGuessedAudio = document.getElementById("word_guessed_audio");
+        this.nextRoundAudio = document.getElementById("next_round_audio");
+        this.clockAudio = document.getElementById("clock_audio");
+
 
         this.drawingEnabled = false;
 
@@ -161,10 +165,24 @@ export default class GameView extends AbstractView {
             this.ctx.fillStyle = "#FFF";
             this.ctx.fillRect(0, 0, this.canvasDrawing.width, this.canvasDrawing.height);
 
+            this.clockAudio.pause();
+            this.clockAudio.currentTime = 0;
+            this.nextRoundAudio.play();
+
             this.roundSpan.innerHTML = `${this.model.currentRound}/${this.model.numberOfRounds}`
         };
 
         this.model.onGameUpdate = () => {
+
+            if (this.clockAudio.paused) {
+                this.clockAudio.playbackRate = 1;
+                this.clockAudio.play();
+            }
+            
+            if (this.model.timeLeft <= 10) {
+                this.clockAudio.playbackRate = 2;
+            }
+
             if (this.model.drawing) {
                 this.wordHintSpan.innerHTML = this.model.currentWord;
             }
@@ -186,6 +204,8 @@ export default class GameView extends AbstractView {
             html += "</ul>";
 
             this.chatDiv.innerHTML = html;
+            
+
         };
 
         this.model.onCanvasChanged = content => {
@@ -199,7 +219,7 @@ export default class GameView extends AbstractView {
             
                 img.src = this.model.canvasImage;
             }
-
+            
         };
 
         this.canvasDrawing = document.getElementById("canvas_drawing");

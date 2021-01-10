@@ -20,7 +20,7 @@ app.use(express.json());
 // Request logging
 app.use(morgan("tiny"));
 
-const TIME_PER_ROUND = 20;
+const TIME_PER_ROUND = 30;
 
 
 let games = [];

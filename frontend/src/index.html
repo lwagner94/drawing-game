@@ -69,6 +69,9 @@
         <input class="input" type="text" placeholder="Your guess" id="input_guess">
         <button class="button is-primary" id=button_guess>Guess </button>
 
+        <p id="text_time_left"> Time left: </p>
+        <p id="text_round"> Round: </p>
+
         <button class="round_button" id=button_yellow style="background-color:yellow; height: 20px; width: 20px" > </button>
         <button class="round_button" id=button_orange style="background-color:orange; height: 20px; width: 20px" > </button>
         <button class="round_button" id=button_red style="background-color:red; height: 20px; width: 20px" > </button>
@@ -79,10 +82,22 @@
         <button class="round_button" id=button_darkgreen style="background-color:rgb(00, 112, 21); height: 20px; width: 20px" > </button>
         <button class="round_button" id=button_brown style="background-color:rgb(107, 58, 12); height: 20px; width: 20px" > </button>
         <button class="round_button" id=button_black style="background-color:black; height: 20px; width: 20px" > </button>
-        <button class="round_button" id=button_ereaser style="height: 30px; width: 60px" > Ereaser </button>
+        <button class="round_button" id=button_ereaser style="height: 30px; width: 70px" > Ereaser </button>
         <button class="round_button" id=button_clear style="height: 30px; width: 60px" > Clear </button>
 
-
+        <audio id="clock_audio">
+            <source src="/audios/clock_1min.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="word_guessed_audio">
+            <source src="/audios/word_guessed.wav" type="audio/wav">
+        </audio>
+        <audio id="next_round_audio">
+            <source src="/audios/next_round.wav" type="audio/wav">
+        </audio>
+        <audio id="winning_audio">
+            <source src="/audios/winning_sound.wav" type="audio/wav">
+        </audio>
+        
         <input  id=pencilsize_slider type="range" min="3" max="23" value="5" class="slider" >
         <canvas id="pencilsize" height=30 width=30></canvas>
 

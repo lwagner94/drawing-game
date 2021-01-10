@@ -11,6 +11,8 @@ export default class GameFinishedView extends AbstractView {
         this.gameWinnerText = document.getElementById("winner_text");
         this.userlistFinished = document.getElementById("userlist_finished");
 
+        this.winningAudio = document.getElementById("winning_audio");
+
         this.returnHomescreen = () => {};
         this.setupHandlers();
 
@@ -26,6 +28,8 @@ export default class GameFinishedView extends AbstractView {
             userlist.sort((a, b) => {
                 return b.score - a.score;
             });
+
+            this.winningAudio.play();
 
             this.gameWinnerText.innerText = `The winner is ${userlist[0].userName}!`;
 

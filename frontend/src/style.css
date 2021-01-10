@@ -6,7 +6,7 @@
     --erease-clear-left: 440px;
     --erease-clear-top: 625px;
 
-    --slider-left: 580px;
+    --slider-left: 590px;
     --slider-top: 650px;
   }
 
@@ -14,11 +14,30 @@
     position: relative;
 }
 
+#text_round {
+    position: absolute;
+    top: 620px;
+    left: 15px;
+    height: 50px;
+    width: 180px;
+    font-size: 18px;
+}
+
+#text_time_left {
+    position: absolute;
+    top: 420px;
+    left: 20px;
+    height: 50px;
+    width: 100px;
+    font-size: 18px;
+}
+
 #canvas_drawing {
     position: absolute;
     top: 100px;
     left: 200px;
     border: 3px solid black;
+    border-radius: 5px;
 }
 
 #span_word_hint {
@@ -26,10 +45,11 @@
     position: absolute;
     width: 300px;
     height: 40px;
-    top: 50px;
+    top: 40px;
     left: 300px;
     font-size: 20px;
     font-weight: bold;
+    border-radius: 5px;
 
     display: flex;
     justify-content: center;
@@ -42,6 +62,8 @@
     height: 200px;
     width: 180px;
     border: 1px solid black;
+    border-radius: 5px;
+
     top: 100px;
     left: 10px;
 }
@@ -50,20 +72,32 @@
     border: 2px solid black;
     position: absolute;
     height: 50px;
-    width: 180px;
+    width: 50px;
     border: 1px solid black;
-    top: 310px;
-    left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    top: 410px;
+    left: 115px;
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #span_round {
     border: 2px solid black;
     position: absolute;
     height: 50px;
-    width: 180px;
+    width: 100px;
     border: 1px solid black;
     top: 610px;
-    left: 10px;
+    left: 90px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #div_chat {
@@ -76,6 +110,7 @@
     border: 1px solid black;
     top: 100px;
     left: 710px;
+    border-radius: 5px;
 }
 #input_guess {
     border: 1px solid black;
@@ -167,7 +202,7 @@
 #button_clear {
     position: absolute;
     top: var(--erease-clear-top);
-    left: calc(var(--erease-clear-left) + 65px);
+    left: calc(var(--erease-clear-left) + 75px);
 }
 
 #pencilsize_slider {
