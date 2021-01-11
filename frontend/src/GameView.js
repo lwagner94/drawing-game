@@ -45,7 +45,8 @@ export default class GameView extends AbstractView {
         this.pencilSizeCanvas = document.getElementById("pencilsize");
 
         this.penctx = document.getElementById("pencilsize").getContext('2d');
-
+        
+        this.buttonAudio = document.getElementById("button_audio");
         this.wordGuessedAudio = document.getElementById("word_guessed_audio");
         this.nextRoundAudio = document.getElementById("next_round_audio");
         this.clockAudio = document.getElementById("clock_audio");
@@ -139,6 +140,14 @@ export default class GameView extends AbstractView {
         });
 
         this.guessButton.onclick = () => {
+            if (this.guessInput.value.toLowerCase() == this.model.currentWord) {
+                this.wordGuessedAudio.play();
+            }
+            else {
+                this.buttonAudio.currentTime = 0;
+                this.buttonAudio.play();
+            }
+
             this.onWordGuessed(this.guessInput.value);
             this.guessInput.value = "";
         }
