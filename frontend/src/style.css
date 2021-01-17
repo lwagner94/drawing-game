@@ -10,8 +10,37 @@
     --slider-top: 650px;
   }
 
+#div_managewordlistsview {
+    position: relative;
+    
+}
+
+.drop_zone {
+    position: absolute;
+    font-size: 16px;
+    top: 30px;
+    left: 30px;
+}
+
+#wordlists_section {
+    position: absolute;
+    font-size: 16px;
+    top: 30px;
+    left: 250px;
+}
+
+#button_return_homescreen {
+    position: absolute;
+    font-size: 16px;
+    height: 40px;
+    width: 80px;
+    top: 195px;
+    left: 420px;
+}
+
 #div_gameview {
     position: relative;
+    
 }
 
 #text_round {
